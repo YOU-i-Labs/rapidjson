@@ -1,4 +1,16 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+# Copyright (c) 2016, Ruslan Baratov
+#
+# Licensed under the MIT License (the "License"); you may not use this file except
+# in compliance with the License. You may obtain a copy of the License at
+#
+# http://opensource.org/licenses/MIT
+#
+# Unless required by applicable law or agreed to in writing, software distributed
+# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations under the License.
+
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 if(POLICY CMP0025)
   # detect Apple's Clang
   cmake_policy(SET CMP0025 NEW)
@@ -9,12 +21,7 @@ endif()
 
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules)
 
-PROJECT(RapidJSON CXX)
-
-set(LIB_MAJOR_VERSION "1")
-set(LIB_MINOR_VERSION "0")
-set(LIB_PATCH_VERSION "2")
-set(LIB_VERSION_STRING "${LIB_MAJOR_VERSION}.${LIB_MINOR_VERSION}.${LIB_PATCH_VERSION}")
+PROJECT(RapidJSON VERSION 1.0.2 LANGUAGES CXX)
 
 # compile in release with debug info mode by default
 if(NOT CMAKE_BUILD_TYPE)
@@ -92,6 +99,8 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
 endif()
 
+add_library(rapidjson INTERFACE)
+
 #add extra search paths for libraries and includes
 SET(INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "The directory the headers are installed in")
 SET(LIB_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib" CACHE STRING "Directory where lib will install")
@@ -141,10 +150,6 @@ install(FILES readme.md
         DESTINATION "${DOC_INSTALL_DIR}"
         COMPONENT doc)
 
-install(DIRECTORY include/rapidjson
-    DESTINATION "${INCLUDE_INSTALL_DIR}"
-    COMPONENT dev)
-
 install(DIRECTORY example/
     DESTINATION "${DOC_INSTALL_DIR}/examples"
     COMPONENT examples
@@ -154,20 +159,51 @@ install(DIRECTORY example/
     PATTERN "Makefile" EXCLUDE
     PATTERN "cmake_install.cmake" EXCLUDE)
 
-# Provide config and version files to be used by other applications
-# ===============================
+### Install ###
+set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
 
-export(PACKAGE ${PROJECT_NAME})
+set(config_install_dir "lib/cmake/${PROJECT_NAME}")
+set(include_install_dir "include")
 
-# cmake-modules
-CONFIGURE_FILE(${PROJECT_NAME}Config.cmake.in
-    ${PROJECT_NAME}Config.cmake
-    @ONLY)
-CONFIGURE_FILE(${PROJECT_NAME}ConfigVersion.cmake.in
-    ${PROJECT_NAME}ConfigVersion.cmake
-    @ONLY)
-INSTALL(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-    DESTINATION "${CMAKE_INSTALL_DIR}"
-    COMPONENT dev)
+set(version_config "${generated_dir}/${PROJECT_NAME}ConfigVersion.cmake")
+set(project_config "${generated_dir}/${PROJECT_NAME}Config.cmake")
+set(targets_export_name "${PROJECT_NAME}Targets")
+set(namespace "${PROJECT_NAME}::")
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${version_config}" COMPATIBILITY SameMajorVersion
+)
+
+# Note: use 'targets_export_name'
+configure_package_config_file(
+    "cmake/Config.cmake.in"
+    "${project_config}"
+    INSTALL_DESTINATION "${config_install_dir}"
+)
+
+install(
+    TARGETS rapidjson
+    EXPORT "${targets_export_name}"
+    COMPONENT dev
+    INCLUDES DESTINATION "${include_install_dir}"
+)
+
+install(
+    DIRECTORY "include/rapidjson"
+    DESTINATION "${include_install_dir}"
+    COMPONENT dev
+)
+
+install(
+    FILES "${project_config}" "${version_config}"
+    DESTINATION "${config_install_dir}"
+    COMPONENT dev
+)
+
+install(
+    EXPORT "${targets_export_name}"
+    NAMESPACE "${namespace}"
+    DESTINATION "${config_install_dir}"
+    COMPONENT dev
+)
