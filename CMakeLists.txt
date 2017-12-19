@@ -21,7 +21,7 @@ endif()
 
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules)
 
-PROJECT(RapidJSON VERSION 1.0.2)
+PROJECT(RapidJSON VERSION 1.1.0)
 
 # compile in release with debug info mode by default
 if(NOT CMAKE_BUILD_TYPE)
