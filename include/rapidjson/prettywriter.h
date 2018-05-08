@@ -3,6 +3,7 @@
 
 #include "writer.h"
 
+namespace yi {
 namespace rapidjson {
 
 //! Writer with indentation and spacing.
@@ -152,5 +153,6 @@ protected:
 };
 
 } // namespace rapidjson
+} // namespace yi
 
 #endif // RAPIDJSON_RAPIDJSON_H_

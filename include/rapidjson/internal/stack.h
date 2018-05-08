@@ -1,6 +1,7 @@
 #ifndef RAPIDJSON_INTERNAL_STACK_H_
 #define RAPIDJSON_INTERNAL_STACK_H_
 
+namespace yi {
 namespace rapidjson {
 namespace internal {
 
@@ -78,5 +79,6 @@ private:
 
 } // namespace internal
 } // namespace rapidjson
+} // namespace yi
 
 #endif // RAPIDJSON_STACK_H_

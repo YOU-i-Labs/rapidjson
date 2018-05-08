@@ -4,6 +4,7 @@
 #include "rapidjson.h"
 #include "internal/stack.h"
 
+namespace yi {
 namespace rapidjson {
 
 //! Represents an in-memory output stream.
@@ -45,5 +46,6 @@ inline void PutN(GenericStringBuffer<UTF8<> >& stream, char c, size_t n) {
 }
 
 } // namespace rapidjson
+} // namespace yi
 
 #endif // RAPIDJSON_STRINGBUFFER_H_

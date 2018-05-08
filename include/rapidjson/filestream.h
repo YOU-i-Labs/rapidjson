@@ -3,6 +3,7 @@
 
 #include <cstdio>
 
+namespace yi {
 namespace rapidjson {
 
 //! Wrapper of C file stream for input or output.
@@ -42,5 +43,6 @@ private:
 };
 
 } // namespace rapidjson
+} // namespace yi
 
 #endif // RAPIDJSON_FILESTREAM_H_

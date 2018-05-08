@@ -12,6 +12,7 @@
 #pragma warning(disable : 4127) // conditional expression is constant
 #endif
 
+namespace yi {
 namespace rapidjson {
 
 //! JSON writer
@@ -233,6 +234,7 @@ private:
 };
 
 } // namespace rapidjson
+} // namespace yi
 
 #ifdef _MSC_VER
 #pragma warning(pop)

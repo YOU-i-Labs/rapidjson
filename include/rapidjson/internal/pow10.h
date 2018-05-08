@@ -1,6 +1,7 @@
 #ifndef RAPIDJSON_POW10_
 #define RAPIDJSON_POW10_
 
+namespace yi {
 namespace rapidjson {
 namespace internal {
 
@@ -50,5 +51,6 @@ inline double Pow10(int n) {
 
 } // namespace internal
 } // namespace rapidjson
+} // namespace yi
 
 #endif // RAPIDJSON_POW10_

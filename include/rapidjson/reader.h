@@ -29,6 +29,7 @@
 	RAPIDJSON_MULTILINEMACRO_END
 #endif
 
+namespace yi {
 namespace rapidjson {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -675,6 +676,7 @@ private:
 typedef GenericReader<UTF8<> > Reader;
 
 } // namespace rapidjson
+} // namespace yi
 
 #ifdef _MSC_VER
 #pragma warning(pop)

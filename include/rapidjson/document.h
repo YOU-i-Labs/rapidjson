@@ -10,6 +10,7 @@
 #pragma warning(disable : 4127) // conditional expression is constant
 #endif
 
+namespace yi {
 namespace rapidjson {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -813,6 +814,7 @@ private:
 typedef GenericDocument<UTF8<> > Document;
 
 } // namespace rapidjson
+} // namespace yi
 
 #ifdef _MSC_VER
 #pragma warning(pop)

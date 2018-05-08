@@ -1,6 +1,7 @@
 #ifndef RAPIDJSON_INTERNAL_STRFUNC_H_
 #define RAPIDJSON_INTERNAL_STRFUNC_H_
 
+namespace yi {
 namespace rapidjson {
 namespace internal {
 
@@ -20,5 +21,6 @@ inline SizeType StrLen(const Ch* s) {
 
 } // namespace internal
 } // namespace rapidjson
+} // namespace yi
 
 #endif // RAPIDJSON_INTERNAL_STRFUNC_H_

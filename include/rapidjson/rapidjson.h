@@ -60,12 +60,14 @@ typedef unsigned __int64 uint64_t;
 // RAPIDJSON_NO_SIZETYPEDEFINE
 
 #ifndef RAPIDJSON_NO_SIZETYPEDEFINE
+namespace yi {
 namespace rapidjson {
 //! Use 32-bit array/string indices even for 64-bit platform, instead of using size_t.
 /*! User may override the SizeType by defining RAPIDJSON_NO_SIZETYPEDEFINE.
 */
 typedef unsigned SizeType;
 } // namespace rapidjson
+} // namespace yi
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -87,6 +89,7 @@ typedef unsigned SizeType;
 #define RAPIDJSON_MULTILINEMACRO_END \
 } while((void)0, 0)
 
+namespace yi {
 namespace rapidjson {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -521,5 +524,6 @@ enum Type {
 };
 
 } // namespace rapidjson
+} // namespace yi
 
 #endif // RAPIDJSON_RAPIDJSON_H_
