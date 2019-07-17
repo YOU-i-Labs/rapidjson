@@ -1971,6 +1971,7 @@ private:
             data_.ss.SetLength(s.length);
             str = data_.ss.str;
         } else {
+#if !defined(__clang_analyzer__)
             data_.f.flags = kCopyStringFlag;
             data_.s.length = s.length;
             str = static_cast<Ch *>(allocator.Malloc((s.length + 1) * sizeof(Ch)));
@@ -1978,6 +1979,7 @@ private:
         }
         std::memcpy(str, s, s.length * sizeof(Ch));
         str[s.length] = '\0';
+#endif // __clang_analyzer__
     }
 
     //! Assignment without calling destructor
