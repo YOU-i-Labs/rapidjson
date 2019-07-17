@@ -1965,6 +1965,10 @@ private:
 
     //! Initialize this value as copy string with initial data, without calling destructor.
     void SetStringRaw(StringRefType s, Allocator& allocator) {
+#if defined(__clang_analyzer__)
+        (void)s;
+        (void)allocator;
+#else
         Ch* str = 0;
         if (ShortString::Usable(s.length)) {
             data_.f.flags = kShortStringFlag;
@@ -1978,6 +1982,7 @@ private:
         }
         std::memcpy(str, s, s.length * sizeof(Ch));
         str[s.length] = '\0';
+#endif // __clang_analyzer__
     }
 
     //! Assignment without calling destructor

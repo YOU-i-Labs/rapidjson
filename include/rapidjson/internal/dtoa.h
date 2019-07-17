@@ -214,6 +214,12 @@ inline char* Prettify(char* buffer, int length, int k, int maxDecimalPlaces) {
 }
 
 inline char* dtoa(double value, char* buffer, int maxDecimalPlaces = 324) {
+#if defined(__clang_analyzer__)
+    (void)value;
+    (void)buffer;
+    (void)maxDecimalPlaces;
+    return nullptr;
+#else
     RAPIDJSON_ASSERT(maxDecimalPlaces >= 1);
     Double d(value);
     if (d.IsZero()) {
@@ -233,6 +239,7 @@ inline char* dtoa(double value, char* buffer, int maxDecimalPlaces = 324) {
         Grisu2(value, buffer, &length, &K);
         return Prettify(buffer, length, K, maxDecimalPlaces);
     }
+#endif
 }
 
 #ifdef __GNUC__
