@@ -37,6 +37,10 @@ inline const char* GetDigitsLut() {
 }
 
 inline char* u32toa(uint32_t value, char* buffer) {
+#if defined(__clang_analyzer__)
+    (void)value;
+    (void)buffer;
+#else
     const char* cDigitsLut = GetDigitsLut();
 
     if (value < 10000) {
@@ -107,20 +111,29 @@ inline char* u32toa(uint32_t value, char* buffer) {
         *buffer++ = cDigitsLut[d4];
         *buffer++ = cDigitsLut[d4 + 1];
     }
+#endif // __clang_analyzer__
     return buffer;
 }
 
 inline char* i32toa(int32_t value, char* buffer) {
+#if defined(__clang_analyzer__)
+    (void)value;
+    (void)buffer;
+#else
     uint32_t u = static_cast<uint32_t>(value);
     if (value < 0) {
         *buffer++ = '-';
         u = ~u + 1;
     }
-
+#endif // __clang_analyzer__
     return u32toa(u, buffer);
 }
 
 inline char* u64toa(uint64_t value, char* buffer) {
+#if defined(__clang_analyzer__)
+    (void)value;
+    (void)buffer;
+#else
     const char* cDigitsLut = GetDigitsLut();
     const uint64_t  kTen8 = 100000000;
     const uint64_t  kTen9 = kTen8 * 10;
@@ -284,17 +297,21 @@ inline char* u64toa(uint64_t value, char* buffer) {
         *buffer++ = cDigitsLut[d8];
         *buffer++ = cDigitsLut[d8 + 1];
     }
-    
+#endif // __clang_analyzer__
     return buffer;
 }
 
 inline char* i64toa(int64_t value, char* buffer) {
+#if defined(__clang_analyzer__)
+    (void)value;
+    (void)buffer;
+#else
     uint64_t u = static_cast<uint64_t>(value);
     if (value < 0) {
         *buffer++ = '-';
         u = ~u + 1;
     }
-
+#endif // __clang_analyzer__
     return u64toa(u, buffer);
 }
 
